@@ -96,6 +96,10 @@ class Sale(models.Model):
     iva = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
 
+
+    def get_image(self):
+        return '{}{}'.format(settings.STATIC_URL, 'img/logo.png')
+
     def toJSON(self):
         item = model_to_dict(self)
         item['cli'] = self.cli.toJSON()
@@ -128,3 +132,10 @@ class DetSale(models.Model):
         verbose_name = 'Detalle de Venta'
         verbose_name_plural = 'Detalle de Ventas'
         ordering = ['id']
+
+    def toJSON(self):
+        item = model_to_dict(self,exclude=['sale'])
+        item['prod'] = self.prod.toJSON()
+        item['price'] = format(self.price,'.2f')
+        item['subtotal'] = format(self.subtotal,'.2f')
+        return item

@@ -50,7 +50,7 @@ function submit_with_ajax(url,parameters,callback){
                         console.log(data);
                         
                         if (!data.hasOwnProperty('error')) {
-                            callback();
+                            callback(data);
                             return false;
                         }
                         message_error(data.error);
@@ -75,7 +75,7 @@ function submit_with_ajax(url,parameters,callback){
 }
 
 
-function alert_action(callback){
+function alert_action(callback,cancel=null){
     $.confirm({
         theme: 'material',
         title: 'Confirmación',
@@ -98,7 +98,7 @@ function alert_action(callback){
                 text: "Cancelar",
                 btnClass: 'btn-red',
                 action: function () {
-                    
+                    cancel();
                 }
             },
         }

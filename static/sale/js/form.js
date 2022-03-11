@@ -92,7 +92,7 @@ var vents = {
         });
     },
 };
-
+    
 $(function () {
 
     $('.select2').select2({
@@ -104,7 +104,8 @@ $(function () {
         format: 'YYYY-MM-DD',
         date: moment().format("YYYY-MM-DD"),
         locale: 'es',
-        //minDate: moment().format("YYYY-MM-DD")
+        minDate: moment().format("YYYY-MM-DD"),
+        maxDate: moment().format("YYYY-MM-DD")
     });
 
     $("input[name='iva']").TouchSpin({
@@ -197,8 +198,14 @@ $(function () {
         var parameters = new FormData();
         parameters.append('action', $('input[name="action"]').val());
         parameters.append('vents', JSON.stringify(vents.items));
-        submit_with_ajax(window.location.pathname,parameters, function () {
-            location.href = '/erp/sale/list/';
+        submit_with_ajax(window.location.pathname,parameters, function (response) {
+            //location.href = '/erp/sale/list/';
+            alert_action(function(){
+                window.open('/erp/sale/invoice/pdf/' + response.id + '/', '_blank');
+                location.href = '/erp/sale/list/';
+            }, function(){
+                location.href = '/erp/sale/list/';
+            });
         });
     });
 

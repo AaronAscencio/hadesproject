@@ -38,7 +38,7 @@ class ProductListView(ListView):
                 data = []
                 for i in Product.objects.all():
                     data.append(i.toJSON())
-                    print(data)
+                    
                     
             else:
                 data['error'] = 'Ha ocurrido un error'
