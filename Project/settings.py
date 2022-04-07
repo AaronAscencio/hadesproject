@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.homepage.apps.HomepageConfig',
     'apps.login.apps.LoginConfig',
     'apps.user.apps.UserConfig',
+    'apps.reports.apps.ReportsConfig'
 
 
 ]

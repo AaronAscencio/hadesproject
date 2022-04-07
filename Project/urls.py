@@ -28,6 +28,7 @@ urlpatterns = [
     path('erp/',include('apps.erp.urls')),
     path('',IndexView.as_view(),name="index_view"),
     path('',include('apps.login.urls')),
+    path('reports/',include('apps.reports.urls'))
 ]
 
 
