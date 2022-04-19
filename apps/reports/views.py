@@ -4,6 +4,9 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.db.models import Sum,DecimalField 
+from django.db.models.functions import Coalesce
+
 
 from apps.reports.forms import ReportForm
 from apps.erp.models import Sale
@@ -47,7 +50,18 @@ class ReportSaleView(TemplateView):
                         format(s.total,'.2f'),
                     ])
 
-
+                subtotal = search.aggregate(r=Coalesce(Sum('subtotal'),0,output_field=DecimalField())).get('r')
+                iva = search.aggregate(r=Coalesce(Sum('iva'),0,output_field=DecimalField())).get('r')
+                total = search.aggregate(r=Coalesce(Sum('total'),0,output_field=DecimalField())).get('r')
+                
+                data.append([
+                    '---',
+                    '---',
+                    '---',
+                    format(subtotal, '.2f'),
+                    format(iva, '.2f'),
+                    format(total, '.2f'),
+                ])
 
             else:
                 data['error'] = 'Ha ocurrido un error'
